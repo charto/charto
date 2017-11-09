@@ -1,0 +1,15 @@
+{
+  "name": "mst-dstore",
+  "version": "0.0.1",
+  "description": "dstore implementation backed by mobx-state-tree",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "keywords": [
+    "dojo",
+    "dgrid",
+    "dstore",
+    "mobx",
+    "mst",
+    "reactive"
+  ]
+}
