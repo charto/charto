@@ -8,6 +8,7 @@
     "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo/src",
     "build:cgeo-wkb": "tsc -p packages/node_modules/cgeo/src",
     "build:cgeo-wkt": "tsc -p packages/node_modules/cgeo/src",
+    "build:charto-3d": "tsc -p packages/node_modules/charto-3d/src",
     "build:charto-leaflet": "tsc -p packages/node_modules/charto-leaflet/src",
     "build:charto-model": "tsc -p packages/node_modules/charto-model/src",
     "build:charto-render": "tsc -p packages/node_modules/charto-render/src",
@@ -16,7 +17,7 @@
     "build:phosphor-dgrid": "tsc -p packages/node_modules/phosphor-dgrid/src",
     "build:phosphor-leaflet": "tsc -p packages/node_modules/phosphor-leaflet/src",
     "build:frontend": "tsc -p packages/node_modules/frontend/src",
-    "build": "npm run build:cgeo && npm run build:cgeo-wkt && npm run build:cgeo-wkb && npm run build:cgeo-cpak && npm run build:geotree && npm run build:charto-model && npm run build:charto-render && npm run build:charto-leaflet && npm run build:mst-dstore && npm run build:phosphor-dgrid && npm run build:phosphor-leaflet && npm run build:frontend",
+    "build": "npm run build:cgeo && npm run build:cgeo-wkt && npm run build:cgeo-wkb && npm run build:cgeo-cpak && npm run build:geotree && npm run build:charto-3d && npm run build:charto-model && npm run build:charto-render && npm run build:charto-leaflet && npm run build:mst-dstore && npm run build:phosphor-dgrid && npm run build:phosphor-leaflet && npm run build:frontend",
     "bundle": "cd bundler && npm run bundle",
     "start": "csrv ."
   },
@@ -28,6 +29,8 @@
   "dependencies": {
     "@phosphor/widgets": "^1.5.0",
     "@types/leaflet": "^1.2.1",
+    "@types/react": "^16.0.22",
+    "@types/react-dom": "^16.0.3",
     "cbin": "^0.1.1",
     "charto-ajax": "^1.0.0",
     "classy-mst": "^0.1.1",
@@ -39,9 +42,13 @@
     "font-awesome": "^4.7.0",
     "leaflet": "^1.2.0",
     "mobx": "^3.3.1",
+    "mobx-react": "^4.3.4",
     "mobx-state-tree": "^1.1.0",
     "phosphor-float-area": "^0.1.2",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
     "systemjs": "^0.20.19",
-    "systemjs-plugin-css": "^0.1.36"
+    "systemjs-plugin-css": "^0.1.36",
+    "systemjs-plugin-text": "0.0.11"
   }
 }

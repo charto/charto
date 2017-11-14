@@ -21,6 +21,19 @@ Contents:
 [phosphor-dgrid](packages/node_modules/phosphor-dgrid) | [![npm version](https://img.shields.io/npm/v/phosphor-dgrid.svg)](https://www.npmjs.com/package/phosphor-dgrid) | Full-featured Dojo-based grid widget for PhosphorJS
 [phosphor-leaflet](packages/node_modules/phosphor-leaflet) | [![npm version](https://img.shields.io/npm/v/phosphor-leaflet.svg)](https://www.npmjs.com/package/phosphor-leaflet) | Leaflet widget for PhosphorJS
 
+Getting started
+---------------
+
+```bash
+git clone https://github.com/charto/charto.git
+cd charto
+npm install
+npm run build
+npm start
+```
+
+Then navigate to: [http://localhost:8080/](http://localhost:8080/)
+
 License
 =======
 

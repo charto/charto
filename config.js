@@ -17,43 +17,25 @@ System.config({
 	},
 
 	packages: {
+		'node_modules/': {
+			defaultExtension: 'js'
+		},
 		'node_modules/dojo/': {
-			defaultExtension: 'js',
 			meta: {
 				'*.js': { loader: 'dojoLoader' }
 			}
 		},
 		'node_modules/dojo-dstore/': {
-			defaultExtension: 'js',
 			meta: {
 				'*.js': { loader: 'dojoLoader' }
 			}
 		},
 		'node_modules/dgrid/': {
-			defaultExtension: 'js',
 			meta: {
 				'*.js': { loader: 'dojoLoader' }
 			}
 		},
-		'node_modules/phosphor-dgrid/node_modules/dojo/': {
-			defaultExtension: 'js',
-			meta: {
-				'*.js': { loader: 'dojoLoader' }
-			}
-		},
-		'node_modules/phosphor-dgrid/node_modules/dojo-dstore/': {
-			defaultExtension: 'js',
-			meta: {
-				'*.js': { loader: 'dojoLoader' }
-			}
-		},
-		'node_modules/phosphor-dgrid/node_modules/dgrid/': {
-			defaultExtension: 'js',
-			meta: {
-				'*.js': { loader: 'dojoLoader' }
-			}
-		},
-		'packages/node_modules/frontend/dist/': {
+		'packages/node_modules/': {
 			defaultExtension: 'js',
 			meta: {
 				'*.css': { loader: 'css' }
