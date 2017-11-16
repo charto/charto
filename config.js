@@ -7,6 +7,8 @@ System.config({
 		dstore: 'node_modules/dojo-dstore',
 		crypto: '@empty',
 		dojoRequire: 'bundler/require.js',
+		vert: 'node_modules/systemjs-plugin-text/text.js',
+		frag: 'node_modules/systemjs-plugin-text/text.js',
 		css: 'node_modules/systemjs-plugin-css/css.js'
 	},
 
