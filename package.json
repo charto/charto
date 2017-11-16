@@ -5,9 +5,9 @@
   "scripts": {
     "tsc": "tsc",
     "build:cgeo": "tsc -p packages/node_modules/cgeo/src",
-    "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo/src",
-    "build:cgeo-wkb": "tsc -p packages/node_modules/cgeo/src",
-    "build:cgeo-wkt": "tsc -p packages/node_modules/cgeo/src",
+    "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo-cpak/src",
+    "build:cgeo-wkb": "tsc -p packages/node_modules/cgeo-wkb/src",
+    "build:cgeo-wkt": "tsc -p packages/node_modules/cgeo-wkt/src",
     "build:charto-3d": "tsc -p packages/node_modules/charto-3d/src",
     "build:charto-leaflet": "tsc -p packages/node_modules/charto-leaflet/src",
     "build:charto-model": "tsc -p packages/node_modules/charto-model/src",
