@@ -1,5 +1,44 @@
-Charto monorepo
-===============
+Charto
+======
+
+This is an online JavaScript-based GIS platform under heavy development, with these goals:
+
+<details><summary>Small, efficient and MIT-licensed.</summary>
+
+  - No bloat. Keep entire `dependencies` hierarchy minimal.
+  - Same applies to `devDependencies`.
+  - Use suitable caching, compression, data structures and algorithms.</details>
+<details><summary>Easy to use.</summary>
+
+  - Targeting users who could handle desktop GIS software.
+  - Convention over configuration. Allow, but don't require changing settings.</details>
+<details><summary>No need to install, register or login.</summary>
+
+  - Back-end is optional, anything serving static files over HTTP is enough.
+  - Compute everything client-side when possible.
+  - Support local file import and export.</details>
+<details><summary>Easy to extend or use parts in other projects.</summary>
+
+  - Aggressively split everything into general-purpose NPM packages.
+  - Simplest possible monorepo structure allows heavy overall customization for specific projects.
+  - Keep all parts small and documented.
+  - Tooling choice criteria:
+    1. Compatibility with other goals and tooling.
+    2. Size and efficiency. Is the tool actually needed?
+    3. Developer ease of use.
+    4. Popularity.</details>
+
+<details><summary>Latest and greatest technologies (as of Q4 2017).</summary>
+
+  - ES6 syntax, statically typed using TypeScript.
+  - [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) and [classy-mst](https://github.com/charto/classy-mst) for easy state management without boilerplate.
+  - Leaflet maps with vector tiles and WebGL rendering.
+  - [PhosphorJS](https://github.com/phosphorjs/phosphor) and [phosphor-float-area](https://github.com/charto/phosphor-float-area) for easy UI customization by end users.
+  - [SystemJS](https://github.com/systemjs/systemjs) and [cbuild](https://github.com/charto/cbuild) for ES6 imports and bundling without backend requirements.
+  - [dgrid](http://dgrid.io/) for one tree grid widget with all the bells and whistles, because there's still no suitably licensed alternative.
+  - React for easy custom UI components.</details>
+
+Click on the goals to see what they mean in practice.
 
 This is a single repository containing several Charto packages. It follows the [alle](https://github.com/boennemann/alle)
 model, with packages under `packages/node_modules`.
@@ -13,6 +52,7 @@ Contents:
 [cgeo-cpak](packages/node_modules/cgeo-cpak) | [![npm version](https://img.shields.io/npm/v/cgeo-cpak.svg)](https://www.npmjs.com/package/cgeo-cpak) | cpak import/export for cgeo types
 [cgeo-wkb](packages/node_modules/cgeo-wkb) | [![npm version](https://img.shields.io/npm/v/cgeo-wkb.svg)](https://www.npmjs.com/package/cgeo-wkb) | WKB import/export for cgeo types
 [cgeo-wkt](packages/node_modules/cgeo-wkt) | [![npm version](https://img.shields.io/npm/v/cgeo-wkt.svg)](https://www.npmjs.com/package/cgeo-wkt) | WKT export for cgeo types
+[charto-3d](packages/node_modules/charto-3d) | [![npm version](https://img.shields.io/npm/v/charto-3d.svg)](https://www.npmjs.com/package/charto-3d) | Small WebGL helper library
 [charto-leaflet](packages/node_modules/charto-leaflet) | [![npm version](https://img.shields.io/npm/v/charto-leaflet.svg)](https://www.npmjs.com/package/charto-leaflet) | Useful classes for Leaflet
 [charto-model](packages/node_modules/charto-model) | [![npm version](https://img.shields.io/npm/v/charto-model.svg)](https://www.npmjs.com/package/charto-model) | Geodata model using mobx-state-tree
 [charto-render](packages/node_modules/charto-render) | [![npm version](https://img.shields.io/npm/v/charto-render.svg)](https://www.npmjs.com/package/charto-render) | Geodata renderer
