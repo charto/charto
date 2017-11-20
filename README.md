@@ -1,6 +1,8 @@
 Charto
 ======
 
+[![build status](https://travis-ci.org/charto/charto.svg?branch=master)](http://travis-ci.org/charto/charto)
+
 This is an online JavaScript-based GIS platform under heavy development, with these goals:
 
 <details><summary>Small, efficient and MIT-licensed.</summary>
