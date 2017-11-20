@@ -84,7 +84,21 @@ the frontend page always stays up to date while editing TypeScript source code.
 Contributing
 ------------
 
-### Adding new NPM packages
+### Adding new files
+
+Source code file extensions should always be `.ts` or `.tsx` or the compiler
+may ignore the code, breaking references to it from elsewhere.
+
+Files containing classes or types intended as part of the public API, should
+be referenced in the package's `index.ts` like this:
+
+```TypeScript
+export { MyClass } from './MyClass';
+```
+
+The corresponding file may be named `MyClass.ts` or `MyClass.tsx`.
+
+### Adding new external NPM packages
 
 According to [alle](https://github.com/boennemann/alle#define-dependencies-globally),
 packages are installed in the repository top-level `node_modules` directory.
