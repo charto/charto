@@ -49,6 +49,7 @@ Contents:
 | Package | NPM | Description |
 ----------|-----|--------------
 [cgeo](packages/node_modules/cgeo) | [![npm version](https://img.shields.io/npm/v/cgeo.svg)](https://www.npmjs.com/package/cgeo) | Geographic data types
+[cgeo-calc](packages/node_modules/cgeo-calc) | [![npm version](https://img.shields.io/npm/v/cgeo-calc.svg)](https://www.npmjs.com/package/cgeo-calc) | computational geometry algorithms for cgeo types
 [cgeo-cpak](packages/node_modules/cgeo-cpak) | [![npm version](https://img.shields.io/npm/v/cgeo-cpak.svg)](https://www.npmjs.com/package/cgeo-cpak) | cpak import/export for cgeo types
 [cgeo-wkb](packages/node_modules/cgeo-wkb) | [![npm version](https://img.shields.io/npm/v/cgeo-wkb.svg)](https://www.npmjs.com/package/cgeo-wkb) | WKB import/export for cgeo types
 [cgeo-wkt](packages/node_modules/cgeo-wkt) | [![npm version](https://img.shields.io/npm/v/cgeo-wkt.svg)](https://www.npmjs.com/package/cgeo-wkt) | WKT export for cgeo types

@@ -5,6 +5,7 @@
   "scripts": {
     "tsc": "tsc",
     "build:cgeo": "tsc -p packages/node_modules/cgeo/src",
+    "build:cgeo-calc": "tsc -p packages/node_modules/cgeo-calc/src",
     "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo-cpak/src",
     "build:cgeo-wkb": "tsc -p packages/node_modules/cgeo-wkb/src",
     "build:cgeo-wkt": "tsc -p packages/node_modules/cgeo-wkt/src",
@@ -17,7 +18,8 @@
     "build:phosphor-dgrid": "tsc -p packages/node_modules/phosphor-dgrid/src",
     "build:phosphor-leaflet": "tsc -p packages/node_modules/phosphor-leaflet/src",
     "build:frontend": "tsc -p packages/node_modules/frontend/src",
-    "build": "npm run build:cgeo && npm run build:cgeo-wkt && npm run build:cgeo-wkb && npm run build:cgeo-cpak && npm run build:geotree && npm run build:charto-3d && npm run build:charto-model && npm run build:charto-render && npm run build:charto-leaflet && npm run build:mst-dstore && npm run build:phosphor-dgrid && npm run build:phosphor-leaflet && npm run build:frontend",
+    "test:cgeo-calc": "tsc -p packages/node_modules/cgeo-calc/test && node packages/node_modules/cgeo-calc/test/test.js",
+    "build": "npm run build:cgeo && npm run build:cgeo-calc && npm run build:cgeo-wkt && npm run build:cgeo-wkb && npm run build:cgeo-cpak && npm run build:geotree && npm run build:charto-3d && npm run build:charto-model && npm run build:charto-render && npm run build:charto-leaflet && npm run build:mst-dstore && npm run build:phosphor-dgrid && npm run build:phosphor-leaflet && npm run build:frontend",
     "bundle": "cd bundler && npm run bundle",
     "start": "csrv ."
   },
