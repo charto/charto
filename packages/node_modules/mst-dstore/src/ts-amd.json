@@ -1,0 +1,17 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"declaration": false,
+		"lib": [ "dom", "es5", "es2015.promise" ],
+		"module": "amd",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"outFile": "../dist/index-amd.js",
+		"removeComments": false,
+		"rootDir": "../..",
+		"sourceMap": false,
+		"strictNullChecks": true,
+		"target": "es5"
+	}
+}
