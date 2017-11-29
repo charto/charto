@@ -13,9 +13,7 @@ System.config({
 	},
 
 	meta: {
-		'dist/bundle.js': {
-			format: 'system'
-		}
+		'dist/bundle.js': { format: 'system' }
 	},
 
 	packages: {
@@ -38,16 +36,16 @@ System.config({
 			}
 		},
 		'packages/node_modules/': {
-			defaultExtension: 'js',
-			meta: {
-				'*.css': { loader: 'css' }
-			}
+			defaultExtension: 'js'
 		},
 		'dist/': {
-			defaultExtension: 'js',
-			meta: {
-				'*.css': { loader: 'css' }
-			}
+			defaultExtension: 'js'
 		}
+	},
+
+	meta: {
+		'*.css': { loader: 'css' },
+		'*.vert': { loader: 'vert' },
+		'*.frag': { loader: 'frag' }
 	}
 });
