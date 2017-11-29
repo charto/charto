@@ -26,9 +26,9 @@
     "start": "csrv ."
   },
   "devDependencies": {
-    "@types/node": "^8.0.47",
+    "@types/node": "^8.0.53",
     "csrv": "^0.1.0",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "@phosphor/widgets": "^1.5.0",
@@ -37,7 +37,7 @@
     "@types/react-dom": "^16.0.3",
     "cbin": "^0.1.1",
     "charto-ajax": "^1.0.0",
-    "classy-mst": "^0.1.1",
+    "classy-mst": "^0.1.2",
     "cpak": "^0.1.0",
     "dgrid": "^1.2.1",
     "dojo": "^1.13.0",
@@ -47,7 +47,7 @@
     "leaflet": "^1.2.0",
     "mobx": "^3.3.1",
     "mobx-react": "^4.3.4",
-    "mobx-state-tree": "^1.1.0",
+    "mobx-state-tree": "^1.2.1",
     "phosphor-float-area": "^0.1.2",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",

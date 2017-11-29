@@ -1,0 +1,34 @@
+<!doctype html>
+<html><head>
+
+	<title>Test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<script src="http://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+	<script>
+		requirejs.config({
+			paths: {
+				'mobx': 'https://unpkg.com/mobx@3.3.2/lib/mobx.umd',
+				'mobx-state-tree': 'https://unpkg.com/mobx-state-tree@1.1.1/dist/mobx-state-tree.umd',
+				'classy-mst': 'node_modules/classy-mst/dist/index-amd',
+				'cgeo': 'packages/node_modules/cgeo/dist/index-amd',
+				'cgeo-calc': 'packages/node_modules/cgeo-calc/dist/index-amd',
+				'cgeo-cpak': 'packages/node_modules/cgeo-cpak/dist/index-amd',
+				'cgeo-wkt': 'packages/node_modules/cgeo-wkt/dist/index-amd',
+				'charto-model': 'packages/node_modules/charto-model/dist/index-amd',
+				'charto-3d': 'packages/node_modules/charto-3d/dist/index-amd',
+				'charto-render': 'packages/node_modules/charto-render/dist/index-amd'
+			}
+		});
+
+		require([
+			'mobx', 'mobx-state-tree', 'cgeo', 'charto-model', 'cgeo-wkt'
+		], (mobx, mst, cgeo, model) => {
+			console.log(new cgeo.Point(1, 2).toWKT());
+			console.log(model.Layer.create({ name: 'Test' }).name);
+		});
+	</script>
+
+</head>
+<body></body>
+</html>
