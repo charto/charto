@@ -11,7 +11,10 @@
 				'text': 'https://cdn.rawgit.com/requirejs/text/2.0.15/text',
 				'mobx': 'https://unpkg.com/mobx@3.3.2/lib/mobx.umd',
 				'mobx-state-tree': 'https://unpkg.com/mobx-state-tree@1.2.1/dist/mobx-state-tree.umd',
+
 				'classy-mst': 'node_modules/classy-mst/dist/index-amd',
+				'cpak': 'node_modules/cpak/dist/index-amd',
+
 				'cgeo': 'packages/node_modules/cgeo/dist/index-amd',
 				'cgeo-calc': 'packages/node_modules/cgeo-calc/dist/index-amd',
 				'cgeo-cpak': 'packages/node_modules/cgeo-cpak/dist/index-amd',
@@ -29,9 +32,11 @@
 		});
 
 		require([
-			'mobx', 'mobx-state-tree', 'cgeo', 'charto-model', 'charto-render', 'cgeo-wkt'
+			'mobx', 'mobx-state-tree', 'cgeo', 'charto-model', 'charto-render', 'cgeo-wkt', 'cgeo-cpak'
 		], (mobx, mst, cgeo, model, render) => {
-			console.log(new cgeo.Point(1, 2).toWKT());
+			const pak = new cgeo.Point(1, 2).toCpak();
+			console.log(pak);
+			console.log(cgeo.Geometry.fromCpak(pak).toWKT());
 			console.log(model.Layer.create({ name: 'Test' }).name);
 		});
 	</script>
