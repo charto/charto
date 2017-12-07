@@ -38,7 +38,7 @@
     "@types/react-dom": "^16.0.3",
     "cbin": "^0.1.1",
     "charto-ajax": "^1.0.0",
-    "classy-mst": "^0.1.2",
+    "classy-mst": "^0.2.0",
     "cpak": "^0.1.1",
     "dgrid": "^1.2.1",
     "dojo": "^1.13.0",
