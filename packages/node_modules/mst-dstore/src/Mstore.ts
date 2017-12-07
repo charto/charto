@@ -54,49 +54,59 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 	addSync: function() {},
 
 	putSync: function(item: Item, options?: any) {
-		const id = options.beforeId;
-
-		let parentItem = getParent(getParent(item));
-
-		parentItem.detach(item);
-
-		this.storeIndex[
-			this.getIdentity(parentItem)
-		].emit(
-			'delete', {
-				target: item
-			}
-		);
-
-		let target: any;
 		let path: string;
+		let parentItem = getParent(getParent(item));
+		let op: 'add' | 'replace';
+		let event: string;
 
-		if(id) {
-			target = this.index[id];
-			path = getPath(target);
+		if(options) {
+			const id = options.beforeId;
+
+			parentItem.detach(item);
+
+			this.storeIndex[
+				this.getIdentity(parentItem)
+			].emit(
+				'delete', {
+					target: item
+				}
+			);
+
+			let target: any;
+
+			if(id) {
+				target = this.index[id];
+				path = getPath(target);
+			} else {
+				target = item;
+				path = '/children/' + getRoot(this.tree).children.length;
+			}
+
+			parentItem = getParent(getParent(target));
+
+			op = 'add';
+			event = 'add';
 		} else {
-			target = item;
-			path = '/children/' + getRoot(this.tree).children.length;
+			path = getPath(item);
+
+			op = 'replace';
+			event = 'update';
 		}
 
 		applyPatch(this.tree, {
-			op: 'add',
+			op,
 			path,
 			value: item
 		});
 
-		parentItem = getParent(getParent(target));
-
 		this.storeIndex[
 			this.getIdentity(parentItem)
 		].emit(
-			'add', {
-				beforeId: options.beforeId,
+			event, {
+				beforeId: options && options.beforeId,
 				target: item
 			}
 		);
-
-		// TODO: emit update event if item was not moved.
 	},
 
 	getSync: function(id: any) {
