@@ -36,6 +36,7 @@
     "@types/leaflet": "^1.2.3",
     "@types/react": "^16.0.25",
     "@types/react-dom": "^16.0.3",
+    "bluebird": "^3.5.1",
     "cbin": "^0.1.1",
     "charto-ajax": "^1.0.0",
     "classy-mst": "^0.2.0",
