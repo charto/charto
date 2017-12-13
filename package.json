@@ -9,6 +9,7 @@
     "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo-cpak/src && tsc -p packages/node_modules/cgeo-cpak/src/ts-amd.json && node bundler/fix-amd.js cgeo-cpak",
     "build:cgeo-wkb": "tsc -p packages/node_modules/cgeo-wkb/src && tsc -p packages/node_modules/cgeo-wkb/src/ts-amd.json && node bundler/fix-amd.js cgeo-wkb",
     "build:cgeo-wkt": "tsc -p packages/node_modules/cgeo-wkt/src && tsc -p packages/node_modules/cgeo-wkt/src/ts-amd.json && node bundler/fix-amd.js cgeo-wkt",
+    "build:cgeo-gml": "tsc -p packages/node_modules/cgeo-gml/src && tsc -p packages/node_modules/cgeo-gml/src/ts-amd.json && node bundler/fix-amd.js cgeo-gml",
     "build:charto-3d": "tsc -p packages/node_modules/charto-3d/src && tsc -p packages/node_modules/charto-3d/src/ts-amd.json && node bundler/fix-amd.js charto-3d",
     "build:charto-leaflet": "tsc -p packages/node_modules/charto-leaflet/src && tsc -p packages/node_modules/charto-leaflet/src/ts-amd.json && node bundler/fix-amd.js charto-leaflet",
     "build:charto-model": "tsc -p packages/node_modules/charto-model/src && tsc -p packages/node_modules/charto-model/src/ts-amd.json && node bundler/fix-amd.js charto-model",
