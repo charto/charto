@@ -6,12 +6,13 @@ const fs = Promise.promisifyAll(require('fs'));
 
 const resolveAsync = Promise.promisify(require('browser-resolve'));
 
-const libPath = path.resolve('.', process.argv[2]);
+const libPath = path.resolve(__dirname, '../packages/node_modules');
 const basePath = path.resolve(__dirname, '..');
+const action = process.argv[2];
 
 System.config({ baseURL: 'npm:/' });
 
-eval(fs.readFileSync('../config.js', { encoding: 'utf-8' }));
+eval(fs.readFileSync(path.resolve(__dirname, '../config.js'), { encoding: 'utf-8' }));
 
 /** Recursively walk a directory tree.
   * @param dir Path to root of tree to explore.
@@ -25,13 +26,13 @@ eval(fs.readFileSync('../config.js', { encoding: 'utf-8' }));
   * @return List of strings returned by the "after" callback, without any
   * empty strings or name of the current NPM package. */
 
-function walk(dir, before, after, name = null, depth = 0) {
+function walk(dir, before, after, handler, name = null, depth = 0) {
 	const listed = fs.readdirAsync(
 		dir
 	).then((list) => Promise.map(list, (item) => {
 		const child = path.resolve(dir, item);
 
-		const result = fs.statAsync(
+		const result = fs.lstatAsync(
 			child
 		).then((stat) => ({
 			path: child,
@@ -45,19 +46,15 @@ function walk(dir, before, after, name = null, depth = 0) {
 
 	const result = listed.then(
 		(items) => before(items, depth)
-	).then(() => Promise.map(
-		listed.value(),
-		(item) => item.enterDir && walk(item.path, before, after, item.name, depth + 1)
+	).then((items) => Promise.map(
+		items,
+		(item) => item.enterDir && walk(item.path, before, after, handler, item.name, depth + 1)
 	)).then(
 		(children) => after(listed.value(), children)
 	).then((dependencyList) => {
-		if(depth == 1) {
-			console.log(name);
-			console.log('\t' + dependencyList.filter((dependency) => dependency && dependency != name).join('\n\t') + '\n');
-		}
-
+		handler(dir, dependencyList, name, depth);
 		return(dependencyList);
-	});
+	}).catch((err) => {});
 
 	return(result);
 }
@@ -76,7 +73,7 @@ function filterChildren(children, depth) {
 			if(item.name != 'src') item.enterDir = false;
 		}
 
-		if(!found) return([]);
+		if(!found) throw(new Error());
 	}
 
 	return(children);
@@ -168,7 +165,7 @@ function collectImports(items, children) {
 
 					return(name);
 				}).catch((err) => {
-					console.log(err);
+					// console.log(err);
 				})
 			);
 
@@ -183,7 +180,7 @@ function collectImports(items, children) {
 
 		for(let dependencyList of parsedImportList) {
 			for(let dependency of dependencyList || []) {
-				nameTbl[dependency] = true;
+				if(dependency) nameTbl[dependency] = true;
 			}
 		}
 
@@ -201,6 +198,60 @@ function collectImports(items, children) {
 	return(result);
 }
 
-walk(libPath, filterChildren, collectImports).then(() => {
-	console.log('ALL DONE');
+const moduleTbl = {};
+const json = require('../package.json').dependencies;
+
+for(let name of Object.keys(json)) {
+	moduleTbl[name] = { version: json[name] }
+}
+
+walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth) => {
+	if(depth == 1) {
+		const jsonPath = path.resolve(dir, 'package.json');
+		const json = require(jsonPath);
+
+		moduleTbl[name] = {
+			deps: dependencyList,
+			dir,
+			json,
+			jsonPath,
+			version: '~' + json.version
+		}
+	}
+}).then(() => {
+	const template = require('./package-template.json');
+
+	for(let name of Object.keys(moduleTbl)) {
+		const { deps, dir, json, jsonPath } = moduleTbl[name];
+
+		if(!json) continue;
+
+		for(let key of Object.keys(template)) {
+			if(action == 'clean') {
+				delete json[key];
+			} else {
+				json[key] = template[key];
+			}
+		}
+
+		if(action == 'clean') {
+			delete json['dependencies'];
+		} else {
+			const depTbl = {};
+
+			for(let dep of deps) {
+				if(!moduleTbl[dep]) {
+					console.log('Unknown dependency ' + dep + ' in ' + name);
+				} else if(dep != name) {
+					depTbl[dep] = moduleTbl[dep].version;
+				}
+			}
+
+			json['dependencies'] = depTbl;
+			json['homepage'] += '/tree/master/' + path.relative(basePath, dir);
+		}
+
+		console.log('Patching ' + jsonPath);
+		fs.writeFileSync(jsonPath, JSON.stringify(json, null, 2) + '\n', { encoding: 'UTF-8' });
+	}
 });
