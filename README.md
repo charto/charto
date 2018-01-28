@@ -30,7 +30,7 @@ This is an online JavaScript-based GIS platform under heavy development, with th
     3. Developer ease of use.
     4. Popularity.</details>
 
-<details><summary>Latest and greatest technologies (as of Q4 2017).</summary>
+<details><summary>Latest and greatest technologies (as of Q1 2018).</summary>
 
   - ES6 syntax, statically typed using TypeScript.
   - [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) and [classy-mst](https://github.com/charto/classy-mst) for easy state management without boilerplate.
@@ -152,4 +152,4 @@ License
 
 [The MIT License](https://raw.githubusercontent.com/charto/charto/master/LICENSE)
 
-Copyright (c) 2017 BusFaster Ltd
+Copyright (c) 2017-2018 BusFaster Ltd
