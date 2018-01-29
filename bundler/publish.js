@@ -212,6 +212,7 @@ walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth)
 
 		moduleTbl[name] = {
 			deps: dependencyList,
+			customDeps: json.dependencies,
 			dir,
 			json,
 			jsonPath,
@@ -240,10 +241,15 @@ walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth)
 			const depTbl = {};
 
 			for(let dep of deps) {
-				if(!moduleTbl[dep]) {
+				const version = (
+					(moduleTbl[dep] && moduleTbl[dep].version) ||
+					(moduleTbl[name] && moduleTbl[name].customDeps && moduleTbl[name].customDeps[dep])
+				);
+
+				if(!version) {
 					console.log('Unknown dependency ' + dep + ' in ' + name);
 				} else if(dep != name) {
-					depTbl[dep] = moduleTbl[dep].version;
+					depTbl[dep] = version;
 				}
 			}
 
