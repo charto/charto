@@ -42,12 +42,12 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 	setData: function() {},
 
 	fetchSync: function(): dstore.FetchArray<Item> {
-		const list = (this.tree as any).children as IObservableArray<any>;
+		const list = ((this.tree as any).children || []) as IObservableArray<any>;
 		return(wrapArray(list));
 	},
 
 	fetchRangeSync: function({ start, end }: { start: number, end: number }): dstore.FetchArray<Item> {
-		const list = (this.tree as any).children as IObservableArray<any>;
+		const list = ((this.tree as any).children || []) as IObservableArray<any>;
 		return(wrapArray(list.slice(start, end), list.length));
 	},
 
