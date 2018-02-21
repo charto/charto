@@ -4,6 +4,7 @@
   "main": "packages/node_modules/frontend/dist/App.js",
   "scripts": {
     "tsc": "tsc",
+    "build:cdata": "tsc -p packages/node_modules/cdata/src && tsc -p packages/node_modules/cdata/src/ts-amd.json && node bundler/fix-amd.js cdata",
     "build:cgeo": "tsc -p packages/node_modules/cgeo/src && tsc -p packages/node_modules/cgeo/src/ts-amd.json && node bundler/fix-amd.js cgeo",
     "build:cgeo-calc": "tsc -p packages/node_modules/cgeo-calc/src && tsc -p packages/node_modules/cgeo-calc/src/ts-amd.json && node bundler/fix-amd.js cgeo-calc",
     "build:cgeo-cpak": "tsc -p packages/node_modules/cgeo-cpak/src && tsc -p packages/node_modules/cgeo-cpak/src/ts-amd.json && node bundler/fix-amd.js cgeo-cpak",
