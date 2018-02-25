@@ -1,2 +1,2 @@
-System.config({ baseURL: window.location.pathname });
+System.config({ baseURL: window.location.pathname.replace(/\/[^/]+/, '/') });
 
