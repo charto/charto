@@ -41,6 +41,7 @@
     "@types/leaflet": "^1.2.5",
     "@types/react": "^16.0.35",
     "@types/react-dom": "^16.0.4",
+    "bigfloat": "0.0.3",
     "bluebird": "^3.5.1",
     "cbin": "^0.1.2",
     "charto-ajax": "^1.0.0",
