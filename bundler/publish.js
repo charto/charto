@@ -260,6 +260,11 @@ walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth)
 		}
 
 		console.log('Patching ' + jsonPath);
-		fs.writeFileSync(jsonPath, JSON.stringify(json, null, 2) + '\n', { encoding: 'UTF-8' });
+
+		if(action == 'debug') {
+			console.log(JSON.stringify(json, null, 2) + '\n');
+		} else {
+			fs.writeFileSync(jsonPath, JSON.stringify(json, null, 2) + '\n', { encoding: 'UTF-8' });
+		}
 	}
 });
