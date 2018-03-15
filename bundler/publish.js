@@ -239,6 +239,7 @@ walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth)
 			delete json['dependencies'];
 		} else {
 			const depTbl = {};
+			let depCount = 0;
 
 			for(let dep of deps) {
 				const version = (
@@ -250,10 +251,11 @@ walk(libPath, filterChildren, collectImports, (dir, dependencyList, name, depth)
 					console.log('Unknown dependency ' + dep + ' in ' + name);
 				} else if(dep != name) {
 					depTbl[dep] = version;
+					++depCount;
 				}
 			}
 
-			json['dependencies'] = depTbl;
+			if(depCount) json['dependencies'] = depTbl;
 			json['homepage'] += '/tree/master/' + path.relative(basePath, dir);
 		}
 
