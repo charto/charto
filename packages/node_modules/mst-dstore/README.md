@@ -12,4 +12,4 @@ License
 
 [The MIT License](https://raw.githubusercontent.com/charto/mst-dstore/master/LICENSE)
 
-Copyright (c) 2017 BusFaster Ltd
+Copyright (c) 2017-2018 BusFaster Ltd
