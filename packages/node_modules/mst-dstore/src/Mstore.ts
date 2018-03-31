@@ -9,6 +9,7 @@ import { IObservableArray } from 'mobx';
 import {
 	types as T,
 	IStateTreeNode,
+	IJsonPatch,
 	getSnapshot,
 	getPath,
 	getPathParts,
@@ -16,7 +17,10 @@ import {
 	hasParent,
 	isAlive,
 	isStateTreeNode,
+	splitJsonPath,
 	joinJsonPath,
+	onPatch,
+	tryResolve,
 	applyPatch
 } from 'mobx-state-tree';
 import * as Deferred from 'dojo/Deferred';
@@ -70,7 +74,45 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 		this.branchRoot = branchRoot;
 		this.treeRoot = treeRoot;
 
-		if(storeIndex) this.storeIndex = storeIndex;
+		if(storeIndex) {
+			this.storeIndex = storeIndex;
+		} else {
+			onPatch(this.treeRoot, ({ op, path, value }: IJsonPatch, undo: IJsonPatch) => {
+				if(this.busy) return;
+
+				const parts = splitJsonPath(path);
+
+				/** Depth of deepest branch with children along path. */
+				let lastBranch = parts.length;
+				while(lastBranch-- && parts[lastBranch] != 'children') {}
+
+				if(lastBranch >= 0) {
+					const childNum = +parts[lastBranch + 1];
+					const parent: MstoreNode | null = tryResolve(
+						this.treeRoot,
+						joinJsonPath(parts.slice(0, lastBranch))
+					);
+					const store = parent && this.storeIndex[this.getIdentity(parent)];
+
+					if(parent && parent.children && store) {
+						if(op == 'add') {
+							const target = parent.children.length > childNum + 1 && parent.children[childNum + 1];
+							store.emit('add', {
+								target: parent.children[childNum],
+								// Dojo uses ID null in events to indicate insertion
+								// after the last child.
+								beforeId: target ? this.getIdentity(target) : null
+							});
+						} else if(op == 'remove') {
+							parts[parts.length - 1] = '';
+							store.emit('delete', { id: this.getIdentity(undo.value, parts) });
+						} else if(op == 'replace') {
+							store.emit('update', { target: parent.children[childNum] });
+						}
+					}
+				}
+			})
+		}
 
 		this.storeIndex[this.getIdentity(branchRoot)] = this;
 	},
@@ -106,6 +148,8 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 	  * @param options Item metadata, mainly its position among siblings. */
 
 	putSync: function(item: MstoreNode, options?: any) {
+		++this.busy;
+
 		/** State tree parent node of the item before the changes. */
 		const parentBefore: MstoreNode = getParent(item, 2);
 		/** State tree parent node of the item after the changes. */
@@ -237,6 +281,8 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 				target: item
 			}
 		);
+
+		--this.busy;
 	},
 
 	/** Called by Dojo to get an item by its ID.
@@ -340,6 +386,9 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 
 	/** Root node of the entire tree seen by Dojo. */
 	treeRoot: null as any as MstoreNode,
+
+	/** Flag whether Dojo is changing the tree (no need to inform it with events). */
+	busy: 0,
 
 	/** Map Dojo IDs to MobX tree nodes. */
 	index: {} as { [id: string]: MstoreNode },
