@@ -378,7 +378,10 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 	  * for accessing the grandchildren inside. */
 
 	getChildren: function(item: MstoreNode) {
-		return(new Mstore(item, this.storeIndex, this.treeRoot));
+		return(
+			this.storeIndex[this.getIdentity(item)] ||
+			new Mstore(item, this.storeIndex, this.treeRoot)
+		);
 	},
 
 	/** Node to track: a MobX state sub-tree root. */
