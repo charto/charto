@@ -9,10 +9,14 @@ import { IObservableArray } from 'mobx';
 import {
 	types as T,
 	IStateTreeNode,
+	getSnapshot,
 	getPath,
 	getPathParts,
 	getParent,
 	hasParent,
+	isAlive,
+	isStateTreeNode,
+	joinJsonPath,
 	applyPatch
 } from 'mobx-state-tree';
 import * as Deferred from 'dojo/Deferred';
@@ -257,32 +261,58 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 		return(true);
 	},
 
-	getIdentity: function(item: MstoreNode | { item: MstoreNode, DnD: any }): any {
-		const DnD = (item as any).DnD;
+	/** Get an ID string for an MST node.
+	  * @param item Node or snapshot.
+	  * Item can also be wrapped inside an object with an item field.
+	  * Then an id field will be added, and the same object is returned.
+	  * @param parts Optional JSON path to item, split into separate strings.
+	  * Mandatory if item is a snapshot, forbidden if item is wrapped. */
 
-		if(DnD) item = (item as { item: MstoreNode, DnD: any }).item;
-		else item = item as MstoreNode;
+	getIdentity: function(item: MstoreNode | { item: MstoreNode, id?: string }, parts?: string[]): any {
+		let wrapper: { item: MstoreNode, id?: string } | undefined;
+
+		if(isStateTreeNode(item)) {
+			if(!isAlive(item)) {
+				if(!parts) parts = getPathParts(item);
+				item = getSnapshot(item);
+			}
+		} else if(!parts) {
+			wrapper = item;
+			item = wrapper.item;
+		}
 
 		if(!item) return(null);
 
 		let id: string | number | null | undefined = item.id;
 
 		if(!id && id !== 0) {
-			const parts = getPathParts(item);
-			let node = this.branchRoot;
+			if(!parts) parts = getPathParts(item);
+			let node = this.treeRoot;
 
 			for(let depth = 0; depth < parts.length; ++depth) {
 				node = (node as any as { [key: string]: MstoreNode })[parts[depth]];
+
+				if(!node) {
+					node = item as MstoreNode;
+				} else if(!isAlive(node)) {
+					node = getSnapshot(node);
+				}
+
 				id = node.id;
 				if(id || id === 0) parts[depth] = '' + id;
 			}
 
-			id = parts.join('/');
+			id = joinJsonPath(parts);
+		} else {
+			id = '' + id;
 		}
 
-		this.index[id] = item;
+		this.index[id] = item as MstoreNode;
 
-		if(DnD) return({ DnD, id });
+		if(wrapper) {
+			wrapper.id = id;
+			return(wrapper);
+		}
 
 		return(id)
 	},
