@@ -26,6 +26,7 @@ import * as declare from 'dojo/_base/declare';
   * in a hierarchical Dojo store. */
 
 export interface MstoreNode extends IStateTreeNode {
+	detach: (child: MstoreNode) => void;
 	children?: MstoreNode[];
 	id: string | number;
 }
@@ -106,9 +107,9 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 
 	putSync: function(item: MstoreNode, options?: any) {
 		/** State tree parent node of the item before the changes. */
-		const parentBefore = getParent(item, 2);
+		const parentBefore: MstoreNode = getParent(item, 2);
 		/** State tree parent node of the item after the changes. */
-		let parentAfter = parentBefore;
+		let parentAfter: MstoreNode = parentBefore;
 		/** ID of the following sibling reported by Dojo if the item was moved
 		  * (will get emitted back to Dojo). */
 		let beforeId: string | null | undefined | { id: string, DnD: any } = options && options.beforeId;
@@ -176,9 +177,9 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 							return('' + next);
 						});
 
-						if(next < parentAfter.children.length) {
+						if(next < parentAfter.children!.length) {
 							// Get the next sibling's ID for reporting to Dojo.
-							beforeId = this.getIdentity(parentAfter.children[next]);
+							beforeId = this.getIdentity(parentAfter.children![next]);
 						} else {
 							// Dojo uses ID null in events to indicate insertion
 							// after the last child.
@@ -190,7 +191,7 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 				// The item was dropped in the empty space after other tree
 				// items. Append it to the root node's children.
 				parentAfter = this.treeRoot;
-				dstPath = getPath(parentAfter) + '/children/' + parentAfter.children.length;
+				dstPath = getPath(parentAfter) + '/children/' + parentAfter.children!.length;
 			}
 
 			// Save changes to the item's position in the MobX state tree.
@@ -249,13 +250,13 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 	removeSync: function(id: string) {
 		const item = this.index[id];
 
-		let parent = getParent(item) as IObservableArray<MstoreNode>;
-		let pos = parent.indexOf(item);
+		let parent: MstoreNode = getParent(item, 2);
+		let pos = parent.children!.indexOf(item);
 
-		parent.splice(pos, 1);
+		parent.children!.splice(pos, 1);
 
 		this.storeIndex[
-			this.getIdentity(getParent(parent))
+			this.getIdentity(parent)
 		].emit('delete', { id });
 
 		return(true);
@@ -286,7 +287,7 @@ const MstoreClass = declare([ Store, Promised, SimpleQuery ], {
 		let id: string | number | null | undefined = item.id;
 
 		if(!id && id !== 0) {
-			if(!parts) parts = getPathParts(item);
+			if(!parts) parts = getPathParts(item as MstoreNode);
 			let node = this.treeRoot;
 
 			for(let depth = 0; depth < parts.length; ++depth) {
